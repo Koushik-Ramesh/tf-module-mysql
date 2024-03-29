@@ -5,8 +5,8 @@ resource "aws_db_instance" "mysql" {
   engine                  = "mysql"
   engine_version          = var.MYSQL_ENGINE_VERSION
   instance_class          = var.MYSQL_INSTANCE_TYPE
-  username                = "admin1"
-  password                = "roboshop1"
+  username                = jsondecode(data.aws_secretsmanager_secret_version.secret_version.secret_string)["MYSQL_USERNAME"]
+  password                = jsondecode(data.aws_secretsmanager_secret_version.secret_version.secret_string)["MYSQL_PASSWORD"]
   parameter_group_name    = aws_db_parameter_group.mysql.name
   db_subnet_group_name    = aws_db_subnet_group.mysql.name
   skip_final_snapshot     = true

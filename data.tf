@@ -8,3 +8,13 @@ data "terraform_remote_state" "vpc" {
    }
  }
 
+ # Fetches the information from secret manager
+data "aws_secretsmanager_secret" "secret" {
+    name = "Robot/Secrets"
+}
+
+# Fetches the secrets version from the above server
+data "aws_secretsmanager_secret_version" "secret" {
+    secret_id = data.aws_secretsmanager_secret.example.id
+}
+
